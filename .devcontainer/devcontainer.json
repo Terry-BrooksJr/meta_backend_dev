@@ -1,0 +1,43 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/anaconda-postgres
+{
+	"name": "Anaconda (Python 3) & PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {},
+		"ghcr.io/devcontainers-contrib/features/black:1": {},
+		"ghcr.io/devcontainers-contrib/features/pyscaffold:1": {}
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [5432],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": {
+		"app": "pip install -r requirements.txt]",
+		"sis-database": ["psql", "-U","$POSTGRES_USER"]
+	},
+	// Configure tool-specific properties.
+	"portsAttributes":{
+		"label": "SIS Database - Postgres",
+		"onAutoForward": "silent",
+		"requireLocalPort": "True"
+		},
+		"customizations": {
+			"vscode": {
+				"extensions": [
+					"batisteo.vscode-django",
+					"donjayamanne.python-extension-pack",
+					"magicstack.MagicPython"
+				]
+			}
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
